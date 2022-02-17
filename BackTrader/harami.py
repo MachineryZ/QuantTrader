@@ -4,7 +4,8 @@ import os
 
 class TestStrategy(bt.Strategy):
     params = (
-        ('version', 'simple')
+        ('version', 'simple'),
+        ('what', 'what')
     )
 
     def log(self, txt, dt=None):
