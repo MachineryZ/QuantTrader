@@ -4,11 +4,7 @@ import os
 
 class TestStrategy(bt.Strategy):
     params = (
-        ('n', 14),
-        ('m', 3),
-        ('l', 3),
-        ('S', 3),
-        ('opt', True),
+        ('version', 'simple')
     )
 
     def log(self, txt, dt=None):
@@ -59,7 +55,7 @@ class TestStrategy(bt.Strategy):
         if self.order:
             return
         
-        if self.params.opt is False: # use original strategy
+        if self.params.version == 'simple': # use original strategy
             if not self.position:
                 condition1 = self.dataclose[-1] < self.dataclos[-2] < self.dataclose[-3]
                 if self.dataclose[-1] < self.dataopen[-1]: # yesterday downs
@@ -78,9 +74,9 @@ class TestStrategy(bt.Strategy):
                     )
                 if condition1 and harami:
                     self.order = self.buy()
-        elif self.params.opt is True: # use optimized strategy
+        elif self.params.version == 'optimized': # use optimized strategy
             if not self.position:
-                condition1 = self.dataclose[-1] < self.dataclos[-2] < self.dataclose[-3]
+                condition1 = self.sma20[0] < self.dataclose[-3]
                 if self.dataclose[-1] < self.dataopen[-1]: # yesterday downs
                     harami = (
                         self.dataclose[0] < self.dataopen[-1]
@@ -94,6 +90,21 @@ class TestStrategy(bt.Strategy):
                         and self.dataopen[0] > self.dataopen[-1]
                         and self.dataopen[0] < self.dataclose[-1]
                         and self.dataclose[0] < self.dataclose[-1]
+                    )
+                if condition1 and harami:
+                    self.order = self.buy()
+        elif self.params.version == 'altra':
+            if not self.position:
+                condition1 = self.sma20[0] < self.dataclose[-3]
+                if self.dataclose[-1] < self.dataopen[-1]: # yesterday downs
+                    harami = (
+                        self.datahigh[0] < self.dataopen[-1]
+                        and self.datalow[0] > self.dataclose[-1]
+                    )
+                else: # yester ups
+                    harami = (
+                        self.datahigh[0] < self.dataclose[-1]
+                        and self.datalow[0] < self.dataopen[-1]
                     )
                 if condition1 and harami:
                     self.order = self.buy()
