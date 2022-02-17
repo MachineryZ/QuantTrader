@@ -2,6 +2,7 @@ import datetime
 import backtrader as bt
 import os
 
+
 class TestStrategy(bt.Strategy):
     params = (
         ('version', 'simple'),
