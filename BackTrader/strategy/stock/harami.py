@@ -5,8 +5,7 @@ import os
 
 class TestStrategy(bt.Strategy):
     params = (
-        ('version', 'simple'),
-        ('what', 'what')
+        ('version', 'simple')
     )
 
     def log(self, txt, dt=None):
@@ -143,8 +142,6 @@ if __name__ == '__main__':
     cerebro.run()
 
     print("Final Portfolio Value: %.2f" % cerebro.broker.getvalue())
-
-    cerebro.print()
     
 
             
