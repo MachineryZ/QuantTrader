@@ -1,2 +1,5 @@
 # QuantTrader
-Self-developed Quant strategy and platform
+Quant Learning Repository
+
+1. BackTrader
+
