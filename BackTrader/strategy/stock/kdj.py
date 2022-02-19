@@ -74,7 +74,7 @@ class TestStrategy(bt.Strategy):
                     self.order = self.buy()
             else:
                 if ((self.K[-1] < 30) and (self.K[0] > 30) and (self.K[0] < 70)) or \
-                ((self.K[-1] > 70) and (self.K[0] < 20)):
+                ((self.K[-1] > 70) and (self.K[0] < 30)):
                     self.order = self.sell()
                     
 if __name__ == '__main__':
@@ -109,8 +109,6 @@ if __name__ == '__main__':
     cerebro.run()
 
     print("Final Portfolio Value: %.2f" % cerebro.broker.getvalue())
-
-    cerebro.print()
     
 
             
