@@ -5,9 +5,9 @@ import numpy as np
 import pandas
 
 
-class TestStrategy(bt.Strategy):
+class MacdEmaTrendFollowStrategy(bt.Strategy):
     params = (
-
+        ('params1', 10),
     )
 
     def log(self, txt, dt=None):
@@ -17,7 +17,9 @@ class TestStrategy(bt.Strategy):
 
     def __init__(self):
 
-        self.macd = bt.indicators.MACD
+        self.ema10 = bt.indicators.EMA(self.datas[0], period=10)
+        self.ema20 = bt.indicators.EMA(self.datas[0], period=20)
+        self.macd = bt.indicators.macd(self.datas[0])
 
         # self.dataclose = self.datas[0].close
         # self.volume = self.datas[0].volume
@@ -77,21 +79,21 @@ if __name__ == '__main__':
     # Create cerebro
     cerebro = bt.Cerebro()
 
-    cerebro.addstrategy(TestStrategy)
+    cerebro.addstrategy(MacdEmaTrendFollowStrategy)
 
     # load data
     data = bt.feeds.GenericCSVData(
-        dataname="600519.csv", # white wine csv
+        dataname="RB9999.csv", # white wine csv
         fromdate=datetime.datetime(2009, 3, 30),
         todate=datetime.datetime(2018, 12, 4),
-        dtformat="%Y%m%d",
-        datetime=1,
+        dtformat="%Y-%m-%d %H:%M:%S",
+        datetime=0,
         open=2,
         high=3,
         low=4,
         close=5,
         volume=6,
-        reverse=False, 
+        reverse=True, 
     )
 
     cerebro.adddata(data)
@@ -100,7 +102,7 @@ if __name__ == '__main__':
 
     cerebro.addsizer(bt.sizers.FixedSize, stake=100)
 
-    cerebro.broker.setcommission(commission=0.002) 
+    cerebro.broker.addcommissioninfo(commission=0.002, margin=0.1, mult=10) 
 
     print("Starting Portfolio Value: %.2f" % cerebro.broker.getvalue())
 
