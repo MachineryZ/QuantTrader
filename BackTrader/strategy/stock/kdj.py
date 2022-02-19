@@ -8,7 +8,7 @@ class TestStrategy(bt.Strategy):
         ('m', 3),
         ('l', 3),
         ('S', 3),
-        ('opt', True),
+        ('opt', True), # can set to false
     )
 
     def log(self, txt, dt=None):
@@ -28,11 +28,11 @@ class TestStrategy(bt.Strategy):
         self.low_n = bt.indicators.Lowest(self.data.low, period=self.params.n)
 
         self.rsv = 100 * bt.DivByZero(
-            a=self.data_close - self.low_n, 
-            b=self.high_n - self.low_n,
+            self.data_close - self.low_n, 
+            self.high_n - self.low_n,
             zero=None
         )
-        self.K = bt.indicators.EMA(self.rsv, period=self.params.n)
+        self.K = bt.indicators.EMA(self.rsv, period=self.params.m)
         self.D = bt.indicators.EMA(self.K, period=self.params.l)
         self.J = self.params.S * self.D - (self.params.S - 1) * self.K
 
@@ -41,7 +41,7 @@ class TestStrategy(bt.Strategy):
             return
         if order.status in [order.Completed]:
             if order.isbuy():
-                self.buyprice = order.executed_price
+                self.buyprice = order.executed.price
                 self.buycomm = order.executed.comm
                 self.bar_executed_close = self.dataclose[0]
             else:
@@ -81,6 +81,8 @@ if __name__ == '__main__':
     # Create cerebro
     cerebro = bt.Cerebro()
 
+    cerebro.addstrategy(TestStrategy)
+
     # load data
     data = bt.feeds.GenericCSVData(
         dataname="600519.csv", # white wine csv
@@ -109,6 +111,8 @@ if __name__ == '__main__':
     cerebro.run()
 
     print("Final Portfolio Value: %.2f" % cerebro.broker.getvalue())
+
+    cerebro.plot()
     
 
             
