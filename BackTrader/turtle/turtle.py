@@ -1,8 +1,8 @@
 import backtrader as bt
 import numpy as np
-import torch
 import pandas
 import datetime
+import matplotlib.pyplot as plt
 
 class ComminfoFuturesPercent(bt.CommInfoBase):
     '''write by myself,using in the future backtest,it means we should give a percent comminfo to broker'''
@@ -23,7 +23,8 @@ class TurtleStrategy(bt.Strategy):
         ('long_period', 20),
         ('short_period', 10),
         ('doprint', False),
-        ('data_index', None)
+        ('data_index', None),
+        ('save_csv_file', False)
     )
 
     def __init__(self):
@@ -99,7 +100,8 @@ class TurtleStrategy(bt.Strategy):
         trade_result = pandas.DataFrame(self.history)
         trade_result.columns = {'Close', 'Value', 'Signal'}
         trade_result.index = self.params.data_index
-        trade_result.to_csv('turtle_result.csv')
+        if self.params.save_csv_file is True:
+            trade_result.to_csv('turtle_result.csv')
 
     def prenext(self):
         self.curbar = len(self) - 1
@@ -148,6 +150,9 @@ class TurtleSizer(bt.Sizer):
             return position.size
         return self.p.stake
 
+def save_plot(cerebro: bt.Cerebro):
+    pass
+
 def pipeline(file_name):
     # Create cerebro engine
     cerebro = bt.Cerebro()
@@ -181,8 +186,8 @@ def pipeline(file_name):
     stake_size = 1 # fix size
 
     cerebro.broker.setcash(start_cash)
-    cerebro.addsizer(bt.sizers.FixedSize, stake=stake_size)
-    # cerebro.addsizer(TurtleSizer)
+    # cerebro.addsizer(bt.sizers.FixedSize, stake=stake_size)
+    cerebro.addsizer(TurtleSizer)
     
     cerebro.addanalyzer(bt.analyzers.Returns, _name="Return")
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name="Sharpe_Ratio")
@@ -203,11 +208,14 @@ def pipeline(file_name):
     print('Sharpe Ratio: %.2f' % Sharpe_Ratio)
     print('Max Drawdown: %.2f%%' % Max_Drawdown)
 
-    turtle_result = pandas.read_csv('turtle_result.csv')
-    print(turtle_result.head())
-    print(turtle_result.tail())
+    try:
+        turtle_result = pandas.read_csv('./turtle_result.csv')
+    except FileNotFoundError:
+        print("There is no turtle_result.csv")
+    except PermissionError:
+        print("You do not have permission to access the file")
 
-    cerebro.plot()
+    # cerebro.plot()
 
 if __name__ == '__main__':
-    pipeline(file_name='RB9999.csv')
+    pipeline(file_name='./data/RB9999.csv')
