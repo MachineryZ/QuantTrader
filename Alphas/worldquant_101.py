@@ -2,16 +2,45 @@ import pandas
 import numpy as np
 
 # ==================== Auxilary functions ====================
-# 
+# Refer to: https://github.com/wpwpwpwpwpwpwpwpwp/Alpha-101-GTJA-191/blob/master/101Alpha_code_1.py
 # 
 def correlation(x, y, window=10):
-    """
-    Wrappe function to estimate rolling correlations
-    x: pandas.DataFrame
-    y: pandas.DataFrame,
-    returns: pandas.DataFrame
+    """ Wrapper function correlation
+
+    Args:
+        x (pandas.DataFrame): input x
+        y (pandas.DataFrame): input y
+        window (int, optional): rolling window size. Defaults to 10.
+
+    Returns:
+        _type_: return rolling correlation result
     """
     return x.rolling(window).corr(y)
+
+def rank(df):
+    """Wrapper function rank
+
+    Args:
+        df (pandas.DataFrame): 
+
+    Returns:
+        pandas.DataFrame: 
+        Example:
+        s = [1, 2, 3, 2, 1]
+        res = [0.3, 0.7, 1.0, 0.7, 0.3],
+        s = [1, 2, 3, 4, 100, 9]
+        res = [1/6, 2/6, 3/6, 4/6, 6/6, 5/6]
+    """
+    return df.rank(pct=True)
+
+def delta(df, period=1):
+    """_summary_
+
+    Args:
+        df (pandas.DataFrame): 
+        period (int, optional): Defaults to 1.
+    """
+
 
 class WorldQuant_101_Alphas(object):
     def __init__(self, df_data):
