@@ -3,7 +3,8 @@ import numpy as np
 
 # ==================== Auxilary functions ====================
 # Refer to: https://github.com/wpwpwpwpwpwpwpwpwp/Alpha-101-GTJA-191/blob/master/101Alpha_code_1.py
-# 
+# use google docstring
+
 def correlation(x, y, window=10):
     """ Wrapper function correlation
 
@@ -34,12 +35,27 @@ def rank(df):
     return df.rank(pct=True)
 
 def delta(df, period=1):
-    """_summary_
+    """Wrapper function delta(difference)
 
     Args:
-        df (pandas.DataFrame): 
-        period (int, optional): Defaults to 1.
+        df (pandas.DataFrame): input
+        period (int, optional): . Defaults to 1.
+
+    Returns:
+        _type_: _description_
     """
+    return df.diff(period)
+
+def log(df):
+    """Wrapper function log(base e)
+
+    Args:
+        input (pandas.DataFrame, np.ndarray, optional): input
+
+    Returns:
+        np.ndarray: returns
+    """
+    return np.log(df)
 
 
 class WorldQuant_101_Alphas(object):
@@ -60,3 +76,10 @@ class WorldQuant_101_Alphas(object):
     # alpha_002: (-1 * correlation(rank(delta(log(volume), 2)), rank(((close - open) / open)), 6))
     def alpha_002(self):
         df = -1 * correlation(rank(delta(log(self.volume), 2)), rank((self.close - self.open) / self.open), 6)
+
+def create_fake_date():
+    return 0
+
+if __name__ == '__main__':
+    stock_df = create_fake_date()
+    
