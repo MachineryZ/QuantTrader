@@ -346,7 +346,6 @@ def alpha010(input):
     cond_1 = ts_min(delta_close, 4) > 0
     cond_2 = ts_max(delta_close, 4) < 0
     alpha = -1 * delta_close
-    print(alpha[cond_1 | cond_2])
     alpha[cond_1 | cond_2] = delta_close
     return alpha
 
@@ -363,15 +362,24 @@ def alpha_010_(input):
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
-    print(alpha[cond_1 * cond_2])
-    print(alpha[cond_1][cond_2])
-    print(alpha[cond_2][cond_1])
+    print(alpha[cond_1 & cond_2].mean())
     alpha[cond_1][cond_2] = -1 * delta_close
+    return alpha
+
+def alpha_010__(input):
+    delta_close = delta(copy.deepcopy(input), 1)
+    cond_1 = ts_min(delta_close, 4) <= 0
+    cond_2 = ts_max(delta_close, 4) >= 0
+    alpha = delta_close
+    print(alpha[cond_1][cond_2].mean())
+    alpha[cond_1 & cond_2] = -1 * delta_close
     return alpha
 
 alpha1 = alpha010(df)
 alpha2 = alpha_010(df)
 alpha3 = alpha_010_(df)
+alpha4 = alpha_010__(df)
 print(alpha1.mean())
 print(alpha2.mean())
 print(alpha3.mean())
+print(alpha4.mean())
