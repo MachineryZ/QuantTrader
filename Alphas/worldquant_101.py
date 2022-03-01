@@ -234,20 +234,23 @@ class WorldQuant_101_Alphas(object):
 
     # alpha_009: ((0 < ts_min(delta(close, 1), 5)) ? delta(close, 1) : ((ts_max(delta(close, 1), 5) < 0) ? 
     # delta(close, 1) : (-1 *delta(close, 1))))
-    # def alpha_009(self):
-    #     alpha = -1 * delta(self.close, 1)
-    #     alpha[0 < ts_min(delta(self.close, 1), 5)] = delta(self.close, 1)
-    #     alpha[ts_max(delta(close, 1), 4) < 0] = delta(self.close, 1)
-    #     return alpha
+    def alpha_009(self):
+        alpha = -1 * delta(self.close, 1)
+        cond_1 = ts_min(delta(self.close, 1), 5) > 0
+        cond_2 = ts_max(delta(self.close, 1), 5) < 0
+        alpha[cond_1 | cond_2] = delta(self.close, 1)
+        return alpha
 
     # alpha_010: rank((0 < ts_min(delta(close, 1), 4)) ? delta(close, 1) : 
     # ((ts_max(delta(close, 1), 4) < 0) ? delta(close, 1):(-1 * delta(close, 1))))
-    # def alpha_010(self):
-    #     alpha = delta(self.close, 1)
-    #     cond_1 = 0 < ts_min(delta(self.close, 1), 4)
-    #     cond_2 = ts_max(delta(self.close, 1), 4) < 0
-    #     alpha[cond1 * cond2] = -delta(self.close, 1)
-    #     return rank(alpha)
+    def alpha_010(self):
+        alpha = - delta(self.close, 1)
+        cond_1 = 0 < ts_min(delta(self.close, 1), 4)
+        cond_2 = ts_max(delta(self.close, 1), 4) < 0
+        alpha[cond_1 | cond_2] = delta(self.close, 1)
+        # Notice: https://github.com/wpwpwpwpwpwpwpwpwp/Alpha-101-GTJA-191/blob/master/101Alpha_code_1.py#L341
+        # should add rank function according to the origin paper
+        return rank(alpha)
 
     # alpha_011: ((rank(ts_max(vwap - close), 3)) + rank(ts_min((vwap - close, 3))) * rank(delta(volume, 3))
     def alpha_011(self):
