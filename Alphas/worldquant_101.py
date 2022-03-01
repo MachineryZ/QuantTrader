@@ -291,6 +291,15 @@ class WorldQuant_101_Alphas(object):
         df = df.replace([-np.inf, np.inf, np.nan], 0)
         return -1 * (rank((stddev(abs((self.close - self.open)), 5) + (self.close - self.open)) + df))
 
+    # alpha_019: ((-1 * sign(((close - delay(close, 7)) + delta(close, 7)))) * (1 + rank((1 + sum(returns, 250)))))
+    def alpha_019(self):
+        return ((-1 * sign(((self.close - delay(self.close, 7)) + delta(self.close, 7)))) * (1 + rank((1 + sum(self.returns, 250)))))
+    
+    # alpha_020: (((-1 * rank((open - delay(high, 1)))) * rank((open - delay(close, 1)))) * rank((open - delay(low, 1))))
+    def alpha_020(self):
+        return (((-1 * rank((self.open - delay(self.high, 1)))) * rank((self.open - delay(self.close, 1)))) * rank((self.open - delay(self.low, 1))))
+
+    
     
 
 def create_fake_date():
