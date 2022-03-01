@@ -282,13 +282,14 @@ def delta(df, period=1):
     """
     return df.diff(period)
 
-df = pandas.DataFrame(np.random.randn(10))
+df = pandas.DataFrame(np.random.randn(20))
 
 def alpha010(input):
     delta_close = delta(input, 1)
     cond_1 = ts_min(delta_close, 4) > 0
     cond_2 = ts_max(delta_close, 4) < 0
     alpha = -1 * delta_close
+    print(alpha[cond_1 | cond_2])
     alpha[cond_1 | cond_2] = delta_close
     return alpha
 
@@ -297,7 +298,17 @@ def alpha_010(input):
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
+    print(alpha[cond_1 * cond_2])
     alpha[cond_1 * cond_2] = -1 * delta_close
+    return alpha
+
+def alpha_010_(input):
+    delta_close = delta(input, 1)
+    cond_1 = ts_min(delta_close, 4) <= 0
+    cond_2 = ts_max(delta_close, 4) >= 0
+    alpha = delta_close
+    print(alpha[cond_1 * cond_2])
+    alpha[cond_1][cond_2] = -1 * delta_close
     return alpha
 
 alpha1 = alpha010(df)
