@@ -153,6 +153,32 @@ def ts_max(df, window=10):
     """
     return df.rolling(window).max()
 
+
+def covariance(x, y, window=10):
+    """Wrapper function to estimate rolling covariance
+
+    Args:
+        x (pandas.DataFrame): 
+        y (pandas.DataFrame): 
+        window (int, optional): Defaults to 10.
+
+    Returns:
+        pandas.DataFrame: 
+    """
+    return x.rolling(window).cov(y)
+
+def stddev(df, window=10):
+    """Wrapper function to estimate rolling standard deviation
+
+    Args:
+        df (pandas.DataFrame): 
+        window (int, optional): Defaults to 10.
+
+    Returns:
+        pandas.DataFrame: 
+    """
+    return df.rolling(window).std()
+
 class WorldQuant_101_Alphas(object):
     def __init__(self, df_data):
         self.open = df_data['open']
@@ -232,7 +258,37 @@ class WorldQuant_101_Alphas(object):
     def alpha_012(self):
         return sign(delta(self.volume, 1)) * (-1 * delta(self.close, 1))
 
+    # alpha_013: (-1 * rank(covariance(rank(close), rank(volume), 5)))
+    def alpha_013(self):
+        return -1 * rank(covariance(rank(self.close), rank(self.volume), 5))
 
+    # alpha_014: ((-1 * rank(delta(returns, 3))) * correlation(open, volume, 10))
+    def alpha_014(self):
+        return (-1 * rank(delta(self.returns, 3))) * correlation(self.open, self.volume, 10)
+
+    # alpha_015: (-1 * sum(rank(correlation(rank(high, rank(volume), 3)), 3))
+    def alpha_015(self):
+        return -1 * sum(rank(correlation(rank(self.high), rank(self.volume), 3)), 3)
+
+    # alpha_016: (-1 * rank(covariance(rank(high), rank(volume), 5)))
+    def alpha_016(self):
+        return -1 * rank(covariance(rank(self.high), rank(self.volume), 5))
+
+    # alpha_017: (((-1 * rank(ts_rank(close, 10))) * rank(delta(delta, close, 1), 1))) *
+    # rank(ts_rank((volume / adv20), 5)))
+    def alpha_017(self):
+        adv20 = sma(self.volume, 20)
+        return -1 * ((rank(ts_rank(self.close, 10))) * 
+                    rank(delta(self.close, 1), 1) * 
+                    rank(ts_rank((self.volume / adv20), 5)))
+    
+    # alpha_018: (-1 * rank(((stddev(abs((close - open)), 5) + (close - open)) + correlation(close, open, 10))))
+    def alpha_018(self):
+        df = correlation(self.close, self.open, 10)
+        df = df.replace([-np.inf, np.inf, np.nan], 0)
+        return -1 * (rank((stddev(abs((self.close - self.open)), 5) + (self.close - self.open)) + df))
+
+    
 
 def create_fake_date():
     return 0
@@ -246,6 +302,7 @@ if __name__ == '__main__':
 
 import pandas
 import numpy as np
+import copy
 def ts_min(df, window=10):
     """Wrapper function to estimate rolling min
 
@@ -285,7 +342,7 @@ def delta(df, period=1):
 df = pandas.DataFrame(np.random.randn(20))
 
 def alpha010(input):
-    delta_close = delta(input, 1)
+    delta_close = delta(copy.deepcopy(input), 1)
     cond_1 = ts_min(delta_close, 4) > 0
     cond_2 = ts_max(delta_close, 4) < 0
     alpha = -1 * delta_close
@@ -294,20 +351,21 @@ def alpha010(input):
     return alpha
 
 def alpha_010(input):
-    delta_close = delta(input, 1)
+    delta_close = delta(copy.deepcopy(input), 1)
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
-    print(alpha[cond_1 * cond_2])
     alpha[cond_1 * cond_2] = -1 * delta_close
     return alpha
 
 def alpha_010_(input):
-    delta_close = delta(input, 1)
+    delta_close = delta(copy.deepcopy(input), 1)
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
+    print(alpha[cond_1 * cond_2])
     print(alpha[cond_1][cond_2])
+    print(alpha[cond_2][cond_1])
     alpha[cond_1][cond_2] = -1 * delta_close
     return alpha
 
@@ -316,4 +374,4 @@ alpha2 = alpha_010(df)
 alpha3 = alpha_010_(df)
 print(alpha1.mean())
 print(alpha2.mean())
-print(alpha3.mean)
+print(alpha3.mean())
