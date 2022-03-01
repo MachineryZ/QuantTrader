@@ -232,7 +232,7 @@ class WorldQuant_101_Alphas(object):
     def alpha_012(self):
         return sign(delta(self.volume, 1)) * (-1 * delta(self.close, 1))
 
-    
+
 
 def create_fake_date():
     return 0
@@ -240,3 +240,67 @@ def create_fake_date():
 if __name__ == '__main__':
     stock_df = create_fake_date()
     
+
+
+
+
+import pandas
+import numpy as np
+def ts_min(df, window=10):
+    """Wrapper function to estimate rolling min
+
+    Args:
+        df (pandas.DataFrame):
+        window (int, optional): Defaults to 1.
+
+    Returns:
+        pandas.DataFrame: 
+    """
+    return df.rolling(window).min()
+
+def ts_max(df, window=10):
+    """Wrapper function to estimate rolling max
+
+    Args:
+        df (pandas.DataFrame()): 
+        window (int, optional): Defaults to 10.
+
+    Returns:
+        pandas.DataFrame: 
+    """
+    return df.rolling(window).max()
+
+def delta(df, period=1):
+    """Wrapper function delta(difference)
+
+    Args:
+        df (pandas.DataFrame): input
+        period (int, optional): . Defaults to 1.
+
+    Returns:
+        _type_: _description_
+    """
+    return df.diff(period)
+
+df = pandas.DataFrame(np.random.randn(10))
+
+def alpha010(input):
+    delta_close = delta(input, 1)
+    cond_1 = ts_min(delta_close, 4) > 0
+    cond_2 = ts_max(delta_close, 4) < 0
+    alpha = -1 * delta_close
+    alpha[cond_1 | cond_2] = delta_close
+    return alpha
+
+def alpha_010(input):
+    delta_close = delta(input, 1)
+    cond_1 = ts_min(delta_close, 4) <= 0
+    cond_2 = ts_max(delta_close, 4) >= 0
+    alpha = delta_close
+    alpha[cond_1 & cond_2] = -delta_close
+    return alpha
+
+alpha1 = alpha010(df)
+alpha2 = alpha_010(df)
+print(alpha1.mean())
+print(alpha2.mean())
