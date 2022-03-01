@@ -297,7 +297,7 @@ def alpha_010(input):
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
-    alpha[cond_1 & cond_2] = -delta_close
+    alpha[cond_1 * cond_2] = -1 * delta_close
     return alpha
 
 alpha1 = alpha010(df)
