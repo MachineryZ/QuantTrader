@@ -307,11 +307,13 @@ def alpha_010_(input):
     cond_1 = ts_min(delta_close, 4) <= 0
     cond_2 = ts_max(delta_close, 4) >= 0
     alpha = delta_close
-    print(alpha[cond_1 * cond_2])
+    print(alpha[cond_1][cond_2])
     alpha[cond_1][cond_2] = -1 * delta_close
     return alpha
 
 alpha1 = alpha010(df)
 alpha2 = alpha_010(df)
+alpha3 = alpha_010_(df)
 print(alpha1.mean())
 print(alpha2.mean())
+print(alpha3.mean)
