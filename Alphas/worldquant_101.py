@@ -299,8 +299,28 @@ class WorldQuant_101_Alphas(object):
     def alpha_020(self):
         return (((-1 * rank((self.open - delay(self.high, 1)))) * rank((self.open - delay(self.close, 1)))) * rank((self.open - delay(self.low, 1))))
 
-    
-    
+    # alpha_021: ((((sum(close, 8)/8) + stddev(close, 8)) < (sum(close, 2) / 2)) ? (-1 * 1) : (((sum(close,
+    # 2) / 2) < ((sum(close, 8) / 8) - stddev(close, 8))) ? 1 : (((1 < (volume / adv20)) || ((volume / adv20) == 1)) ? 1 : (-1*1))))
+    def alpha_021(self):
+        cond_1 = (sum(self.close, 8) / 8 + stddev(self.close, 8)) < (sum(self.close, 2) / 2)
+        cond_2 = sma(self.volume, 20) / self.volume < 1
+        alpha = pandas.DataFrame(np.ones_like(self.close), index=self.close.index)
+        alpha[cond_1 | cond_2] = -1
+        return alpha
+
+    # alpha_022: (-1 * delta(correlation(high, volume, 5), 5) * rank(stddev(close, 20))))
+    def alpha_022(self):
+        return (-1 * (delta(correlation(self.high, self.volume, 5), 5) * rank(stddev(self.close, 20))))
+
+    # alpha_023: (((sum(high, 20) / 20) < high) ? (-1 * delta(high, 2)) : 0)
+    def alpha_023(self):
+        cond = sum(self.high, 20) / 20) < self.high
+        alpha = pandas.DataFrame(np.zeros_like(self.close), index=self.close.index, columns=['close'])
+        alpha.at[cond, 'close'] = -1 * delta(self.high, 2).fillna(value=0)
+        return alpha
+
+    def alpha_024(self):
+         
 
 def create_fake_date():
     return 0
