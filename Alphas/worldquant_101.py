@@ -320,7 +320,7 @@ class WorldQuant_101_Alphas(object):
         return alpha
 
     def alpha_024(self):
-         
+        pass
 
 def create_fake_date():
     return 0
