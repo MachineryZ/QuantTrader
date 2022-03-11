@@ -179,6 +179,41 @@ def stddev(df, window=10):
     """
     return df.rolling(window).std()
 
+def scale(df, k=1):
+    """Wrapper function to scale in time series
+
+    Args:
+        df (pandas.DataFrame): 
+        k (int, optional): Defaults to 1.
+
+    Returns:
+        pandas.DataFrame: multiply k times, divided by the abs summation
+    """
+    return df.mul(k).div(np.abs(df).sum())
+
+def product(df, window=10):
+    """_summary_
+
+    Args:
+        df (_type_): _description_
+        window (int, optional): _description_. Defaults to 10.
+
+    Returns:
+        _type_: _description_
+    """
+    return df.rolling(window).apply(rolling_prod)
+
+def rolling_prod(x):
+    """Auxiliary function to be used in pd.rolling_apply
+
+    Args:
+        x (np.ndarray): 
+
+    Returns:
+        np.ndarray: 
+    """
+    return np.prod(x)
+
 class WorldQuant_101_Alphas(object):
     def __init__(self, df_data):
         self.open = df_data['open']
@@ -314,13 +349,47 @@ class WorldQuant_101_Alphas(object):
 
     # alpha_023: (((sum(high, 20) / 20) < high) ? (-1 * delta(high, 2)) : 0)
     def alpha_023(self):
-        cond = sum(self.high, 20) / 20) < self.high
+        cond = (sum(self.high, 20) / 20) < self.high
         alpha = pandas.DataFrame(np.zeros_like(self.close), index=self.close.index, columns=['close'])
         alpha.at[cond, 'close'] = -1 * delta(self.high, 2).fillna(value=0)
         return alpha
 
+    # alpha_024: ((((delta((sum(close, 100) / 100), 100) / delay(close, 100)) < 0.05) ||
+    # ((delta((sum(close, 100 / 100), 100) / delay(close, 100)) == 0.05)) > (-1 * (close - ts_min(close,
+    # 100))) : (-1 * delta(close, 3)))
     def alpha_024(self):
-        pass
+        cond = ((delta(sum(self.close, 100) / 100), 100) / delay(self.close, 100) <= 0.05)
+        alpha = -1 * delta(self.close, 3)
+        alpha[cond] = -1 * (self.close - ts_min(self.close, 100))
+        return alpha  
+    
+    # alpha_025: rank(((((-1 * returns) * adv20) * vwap) * (high - close)))
+    def alpha_025(self):
+        adv20 = sma(self.volume, 20)
+        return rank(((((-1 * self.returns) * adv20) * self.vwap) * (self.high - self.close)))
+
+    # alpha_026: (-1 * ts_max(correlation(ts_rank(volume, 5), ts_rank(high, 5), 5), 3))
+    def alpha_026(self):
+        return (-1 * ts_max(correlation(ts_rank(self.volume, 5), ts_rank(self.high, 5), 5), 3))
+
+    # alpha_027: ((0.5 < rank((sum(correlation(rank(volume), rank(vwap), 6), 2) / 2.0))) ? (-1): 1)
+    def alpha_027(self):
+        alpha = rank((ts_sum(correlation(rank(self.volume), rank(self.vwap), 6), 2) / 2.0))
+        alpha[alpha < 0.5] = -1
+        alpha[alpha >= 0.5] = 1
+        return alpha
+
+    # alpha_028: scale(((correlation(adv20, low, 5) + ((high + low) / 2)) - close))
+    def alpha_028(self):
+        adv20 = sma(self.volume, 20)
+        return scale(((correlation(adv20, self.low, 5) + ((self.high + self.low) / 2)) - self.close))
+
+    # alpha_029: (min(product(rank(rank(scale(log(sum(ts_min(rank(rank((-1 * rank(delta((close- 1),
+    # 5))))), 2), 1))))), 1), 5) + ts_rank(delay((-1 * returns), 6), 5))
+    def alpha_029(self):
+
+
+        
 
 def create_fake_date():
     return 0
