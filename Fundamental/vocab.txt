@@ -1,0 +1,8 @@
+总市值 capitalization
+开盘价 open
+收盘价 close
+最高价 high
+最低价 low
+移动平均线 MovAv
+成交量 volume
+交易量加权平均价格 vwap(volume weighted average price)
