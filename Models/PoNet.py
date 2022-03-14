@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+# https://arxiv.org/abs/2110.02442
+
 class PoNet(nn.Module):
     def __init__(
         self,
