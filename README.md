@@ -5,6 +5,15 @@ Quant Learning Repository
     1. Contains world quant 101, GTJA 191 alphas
 2. BackTrader
     1. Basic trading strategy backtested on BackTrader 
+3. Fundamental
+    1. Some basic and fundamental knowledge of quant
+4. Models
+    1. Deep learning models which may be useful of quant
+5. Data
+    1. Some useful data of future and stock
+6. HuaTai
+    1. HuaTai Security Report of Artificial Intelligence
+
 
 
 # Paper List and Learning Resources:
