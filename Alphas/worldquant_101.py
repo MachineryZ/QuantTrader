@@ -387,7 +387,14 @@ class WorldQuant_101_Alphas(object):
     # alpha_029: (min(product(rank(rank(scale(log(sum(ts_min(rank(rank((-1 * rank(delta((close- 1),
     # 5))))), 2), 1))))), 1), 5) + ts_rank(delay((-1 * returns), 6), 5))
     def alpha_029(self):
-        pass
+        return (ts_min(rank(rank(scale(log(ts_sum(rank(rank(-1 * rank(delta((self.close - 1), 5)))),
+                2))))), 5) + ts_rank(delay((-1 * self.returns), 6), 5))
+
+    # alpha_030: (((1.0 - rank(((sign((close - delay(close, 1))) + sign((delay(close, 1) - delay(close, 2))))
+    # + sign((delay(close,2) - delay(close, 3)))))) * sum(volume, 5)) / sum(volume, 20))
+    def alpha_030(self):
+        return (((1.0 - rank(((sign((self.close - delay(self.close, 1))) + sign((delay(self.close, 1) - 
+            delay(self.close)))))))))
 
         
 
