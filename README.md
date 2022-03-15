@@ -32,4 +32,5 @@ Quant Learning Repository
     4. Investment Science (derivatives)
     5. The Essays of Warren Buffett (enterprise management and investment)
     6. The little book of Common Sense Investing (basic investment)
-    
+    7. 
+
