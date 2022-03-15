@@ -9,6 +9,7 @@ Quant Learning Repository
     1. Some basic and fundamental knowledge of quant
 4. Models
     1. Deep learning models which may be useful of quant
+    2. Machiner Learning models, like xgboost, random forest
 5. Data
     1. Some useful data of future and stock
 6. HuaTai
@@ -24,3 +25,11 @@ Quant Learning Repository
 ## Alpha Discovering and Mining Paper
 1. Huatai Securities in HuaTai folder
 ## Finance Learning resources
+1. Readings
+    1. International Trade 4th (international trade)
+    2. What do undergrads need to know about trade (short introductional like paper)
+    3. Wat Hedge Funds Really do (introduction about hedge fund)
+    4. Investment Science (derivatives)
+    5. The Essays of Warren Buffett (enterprise management and investment)
+    6. The little book of Common Sense Investing (basic investment)
+    
