@@ -15,6 +15,7 @@ In this folder, I mainly write deep learning models (mostly in NLP) for quant
 - SparseFormer: https://arxiv.org/abs/1904.10509.pdf
 - Synthesizer: https://arxiv.org/abs/2005.00743v2.pdf
 - Transformer: https://arxiv.org/abs/1706.03762.pdf
+- XGBoost: https://arxiv.org/abs/1603.02754.pdf
 
 # Data
 For testing, or for debugging, we will generate some pseudo data for our NN.
