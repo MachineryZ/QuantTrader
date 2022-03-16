@@ -7,4 +7,5 @@ In this folder, we will dive into how to generating factors, the effectiveness o
 3. msci_factor: rule-based indexes that capture the returns of systematic factors,
 https://www.msci.com/msci-diversified-multi-factor-indexes
 4. worldquant_101: world quant 101 factors
-5. 
+5. naive_genetic_programming: basic pipeline for gplearn
+6.
