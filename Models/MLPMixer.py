@@ -49,9 +49,21 @@ def MLPMixer(*, image_size, channels, patch_size, dim, depth, num_classes, expan
 class MLPMixerModel(nn.Module):
     """
     MLP Mixer:
+
+    The core idea of MLP Mixer is that: 
+    1. For classic MLP, we only do fully connected layer on the feature dimension
+        However, we could also do it on the channel dimension (which is also can be 
+        explained as 1d convolution)
+    2. Iteratively, we do feature-dimension fc and do channel-dimension fc, update 
+        the feature once
+    3. cv data in shape of (bs, patch_number, patch_length)
+        can be transfered into the:
+        nlp data in shape of (bs, seq_len, feature_size)
+
     In computer vision, we could transfer an image size of 
     (batch_size, channel_size, width, height) into
-    (batch_size, patch_size * patch_size, patch_number)
+    ->
+    (batch_size, patch_number, patch_size * patch_size)
 
     Corresponding to cv, nlp data is in shape of 
     (batch_size, seq_len, feature_size)
