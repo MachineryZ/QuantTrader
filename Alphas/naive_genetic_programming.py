@@ -7,9 +7,8 @@ from gplearn.genetic import SymbolicTransformer, SymbolicRegressor
 from gplearn.fitness import make_fitness
 from sklearn.utils import check_random_state
 from sklearn.model_selection import train_test_split
+import pickle
 
-data = pandas.read_csv('../data/RB9999.csv')
-print(data)
 
 # set start date and end date
 start_date = '2009-03-30'
@@ -61,7 +60,7 @@ def _stddev(data):
     value = np.nan_to_num(value)
     return value
 
-def _ts_rank(rank):
+def _ts_rank(data):
     window = 10
     value = np.array(pandas.Series(data.flatten()).rolling(window).apply(_rolling_rank).tolist())
     value = np.nan_to_num(value)
@@ -126,4 +125,63 @@ delay = make_function(function=_delay, name="delay", arity=1)
 rank = make_function(function=_rank, name="rank", arity=1)
 scale = make_function(function=_scale, name="scale", arity=1)
 sma = make_function(function=_sma, name="sma", arity=1)
-stddev = make_function(function=_stddev, name="")
+stddev = make_function(function=_stddev, name="stddev", arity=1)
+product = make_function(function=_product, name="product", arity=1)
+ts_rank = make_function(function=_ts_rank, name="ts_rank", arity=1)
+ts_min = make_function(function=_ts_min, name="ts_min", arity=1)
+ts_max = make_function(function=_ts_max, name="ts_max", arity=1)
+ts_argmax = make_function(function=_ts_argmax, name="ts_argmax", arity=1)
+ts_argmin = make_function(function=_ts_argmin, name="ts_argmin", arity=1)
+ts_sum = make_function(function=_ts_sum, name="ts_sum", arity=1)
+
+user_function = [delta, delay, rank, scale, sma, stddev, product, ts_rank, ts_min, 
+    ts_max, ts_argmax, ts_argmin, ts_sum]
+
+init_function = ['add', 'sub', 'mul', 'div']
+
+def _my_metric(y, y_hat, w):
+    value = np.sum(np.abs(y)) +  np.sum(np.abs(y_hat))
+    return value
+
+my_metric = make_fitness(function=_my_metric, greater_is_better=True)
+
+# Generate Expression
+generations = 5
+function_set = init_function + user_function
+metric = my_metric
+population_size = 100
+random_state = 0
+tournament_size = 20
+
+est_gp = SymbolicTransformer(
+    feature_names=fields,
+    function_set=function_set,
+    generations=generations,
+    metric=metric,
+    population_size=population_size,
+    tournament_size=tournament_size,
+    random_state=random_state,
+)
+train_length = 100
+test_length = 20
+x_train = np.random.randn(train_length, 5) # open, close, high, low, volume
+x_test = np.random.randn(test_length, 5)
+y_train = np.random.randn(train_length, )
+y_test = np.random.randn(test_length, )
+
+# Fit into gplearn to get the expression
+est_gp.fit(x_train, y_train)
+with open('naive_gp_model.pkl', 'wb') as f:
+    pickle.dump(est_gp, f)
+print(est_gp)
+best_programs = est_gp._best_programs
+best_programs_dict = {}
+
+for p in best_programs:
+    factor_name = 'alpha_' + str(best_programs.index(p) + 1)
+    best_programs_dict[factor_name] = {"fitness": p.fitness_, "expression": str(p), 
+                                        "depth": p.depth_, "length": p.length_}
+best_programs_dict = pandas.DataFrame(best_programs_dict).T
+best_programs_dict = best_programs_dict.sort_values(by="fitness")
+print(best_programs_dict)
+
