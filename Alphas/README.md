@@ -8,4 +8,4 @@ In this folder, we will dive into how to generating factors, the effectiveness o
 https://www.msci.com/msci-diversified-multi-factor-indexes
 4. worldquant_101: world quant 101 factors
 5. naive_genetic_programming: basic pipeline for gplearn
-6.
+6. 

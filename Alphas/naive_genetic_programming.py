@@ -8,6 +8,7 @@ from gplearn.fitness import make_fitness
 from sklearn.utils import check_random_state
 from sklearn.model_selection import train_test_split
 import pickle
+import graphviz
 
 
 # set start date and end date
@@ -139,9 +140,14 @@ user_function = [delta, delay, rank, scale, sma, stddev, product, ts_rank, ts_mi
 
 init_function = ['add', 'sub', 'mul', 'div']
 
-def _my_metric(y, y_hat, w):
-    value = np.sum(np.abs(y)) +  np.sum(np.abs(y_hat))
+
+# Define Metric Function
+def _my_metric(y, yhat, w):
+    # sum:
+    # value = np.sum(np.abs(y)) +  np.sum(np.abs(y_hat))
+    value = np.dot(y, yhat) / np.sqrt(np.power(y, 2).sum() * np.power(yhat, 2).sum())
     return value
+
 
 my_metric = make_fitness(function=_my_metric, greater_is_better=True)
 
@@ -185,3 +191,16 @@ best_programs_dict = pandas.DataFrame(best_programs_dict).T
 best_programs_dict = best_programs_dict.sort_values(by="fitness")
 print(best_programs_dict)
 
+def alpha_factor_graph(num):
+    factor = best_programs[num-1]
+    print(factor)
+    print(f"fitnes: {factor.fitness_} \
+        depth: {factor.depth_} \
+        length: {factor.length_}")
+    dot_data = factor.export_graphviz()
+    graph = graphviz.Source(dot_data)
+    # graph.render('naive_alpha_factor_graph', format='png', cleanup=True)
+    return graph
+
+graph10 = alpha_factor_graph(10)
+print(graph10)
