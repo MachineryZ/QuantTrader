@@ -46,7 +46,21 @@ def SymbolicRegressorExample():
     # 1. population_size: the number ofr programs in each generation
     # 2. generations: the number of generations to evolve
     # 3. tournament_size: the number of programs that will compete to become part of the next generation
-    # 4. 
+    # 4. stopping_criteria: the required metric value required in order to stop evolution early
+    # 5. const_range: tuple of two floats, or None, default(-1, 1), the range of constants to include in formulas
+    # 6. init_depth: the range of tree depths for the initial population of naive formulas
+    # 7. init_method: 'grow', 'full', 'half and half', 
+    # 8. function_set: default=('add', 'sub', 'mul', 'div') the functions to use when building and evolving programs
+    # 9. metric: the name of the raw fitness metric, 'mean absolute error', 'mse', 'rmse', 'pearson', 'spearman')
+    # 10. parsimony_coefficient: constant penalizes large programs by adjusting their fitness to be less favorable for selection
+    #       like occam razor, avoid meaningless complexity increasing
+    # 11. p_crossover: select a tournament winner to substitute its subtree into random tree's subtree
+    # 12. p_subtree_mutation: select a tournament winner to substitute its subtree into a random whole tree
+    # 13. p_hoist_mutation: select a tournament winner to do hoist mutation (raise the node's level)
+    # 14. p_point_replace: select a tournament winner to replace a random nodes 
+    # 15. max_samples: the fraction of samples to draw from x to evaluate each program on, default 1.0
+    # 16. feature_names: column name
+    # 17.
     est_gp = SymbolicRegressor(
         population_size=5000,
         generations=20,
