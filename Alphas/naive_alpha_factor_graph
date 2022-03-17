@@ -1,8 +1,0 @@
-digraph program {
-node [style=filled]
-0 [label="product", fillcolor="#136ed4"] ;
-1 [label="delta", fillcolor="#136ed4"] ;
-2 [label="high", fillcolor="#60a6f6"] ;
-1 -> 2 ;
-0 -> 1 ;
-}
