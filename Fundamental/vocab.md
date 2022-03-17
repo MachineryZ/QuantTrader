@@ -13,3 +13,4 @@
 优先股市值 priority stock market value
 长期债务总额 total long-term debt
 月换手率 turnover of month (monthly volume / total number of shared)
+
