@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
+from torch import Tensor
 
 
 class AffineTransform(nn.Module):
@@ -104,7 +105,19 @@ class ResMLP(nn.Module):
         return logits
 
 
+class ResMLPModel(nn.Module):
+    def __init__(
+        self,
+        input_size: int,
+        num_layers: int,
+        bias: float,
+
+    ):
+        super(ResMLPModel, self).__init__()
+
+    def forward(self, x: Tensor):
+        return x
+
 if __name__ == "__main__":
     # sequence model
     x = torch.randn(4000, 10, 800)
-    
