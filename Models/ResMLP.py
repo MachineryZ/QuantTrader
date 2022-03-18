@@ -95,12 +95,15 @@ class ResMLP(nn.Module):
 
     def forward(self, x):
         patches = self.patcher(x)
+        print(patches.shape)
         batch_size, num_features, _, _ = patches.shape
         patches = patches.permute(0, 2, 3, 1)
         patches = patches.view(batch_size, -1, num_features)
         # patches.shape == (batch_size, num_patches, num_features)
         embedding = self.mlps(patches)
+        print(embedding.shape)
         embedding = torch.mean(embedding, dim=1)
+        print(embedding.shape)
         logits = self.classifier(embedding)
         return logits
 
@@ -109,15 +112,55 @@ class ResMLPModel(nn.Module):
     def __init__(
         self,
         input_size: int,
+        hidden_size: int,
+        output_size: int,
+        seq_len: int,
         num_layers: int,
         bias: float,
-
+        dropout: float,
+        expansion_factor: int,
     ):
         super(ResMLPModel, self).__init__()
+        self.mlps = nn.Sequential(
+            *[
+                ResMLPLayer(
+                    num_features=hidden_size, 
+                    num_patches=seq_len, 
+                    expansion_factor=expansion_factor,
+                )
+                for _ in range(num_layers)
+            ]
+        )
+        self.gelu = nn.GELU()
+        self.fc_in = nn.Linear(input_size, hidden_size, bias=bias)
+        self.fc_out_1 = nn.Linear(hidden_size, hidden_size // 2, bias=bias)
+        self.fc_out_2 = nn.Linear(hidden_size // 2, output_size, bias=bias)
+
 
     def forward(self, x: Tensor):
-        return x
+        x = self.fc_in(x)
+        x = self.gelu(x)
+        x = self.mlps(x)
+        x = torch.mean(x, dim=1)
+        x = self.fc_out_1(x)
+        x = self.gelu(x)
+        x = self.fc_out_2(x)
+        return x.squeeze(-1)
 
 if __name__ == "__main__":
     # sequence model
-    x = torch.randn(4000, 10, 800)
+    # x = torch.randn(1, 3, 256, 256)
+    # model = ResMLP()
+    x = torch.randn(400, 10, 256)
+    model = ResMLPModel(
+        input_size=256, 
+        hidden_size=32, 
+        output_size=1, 
+        seq_len=10, 
+        num_layers=3, 
+        bias=False, 
+        dropout=0.4, 
+        expansion_factor=2
+    )
+    y = model(x)
+    print(y.shape)
