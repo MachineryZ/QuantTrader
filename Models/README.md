@@ -17,6 +17,7 @@ In this folder, I mainly write deep learning models (mostly in NLP) for quant
 - Transformer: https://arxiv.org/abs/1706.03762.pdf
 - XGBoost: https://arxiv.org/abs/1603.02754.pdf
 - ResMLP: https://arxiv.org/pdf/2105.03404.pdf
+- RepMLP: https://arxiv.org/abs/2105.01883.pdf
 
 # Data
 For testing, or for debugging, we will generate some pseudo data for our NN.
@@ -34,5 +35,34 @@ For testing, or for debugging, we will generate some pseudo data for our NN.
         1. x in (batch\_size, seq\_len, feature\_size), factors
         2. y in (batch\_size, 1), targets, such as returns, volatiliy
         3. adj in (num\_of\_graphs, batch\_size, batch\_size, weight)
+
+# Summary:
+- PoNet: 
+- BigBird: 
+- CosFormer: 
+- Informer: 
+- Linformer: 
+- LinearTransformer: 
+- LocalAttention: 
+- LongFormer: 
+- MLPMixer: 
+    1. Do fully connected in two dimensions: first one is in features dimension, second one is in num_patches dimension
+    2. For num_patches dimension, use pseudo fc (conv1d) instead
+    3. Notice that, classic mlp we usually use decreasing hidden\_size during fc layers; However, in such MLP variants, we use expansion trick. For example: hs -> expansion\_ratio * hs -> hs
+- PerFormer: 
+- ReFormer: 
+- SinkhornTransformer: 
+- SparseFormer: 
+- Synthesizer: 
+- Transformer: 
+    1. Tradition, classical and fundamental Transformer model
+    2. Encoder + Decoder architecture, only encoder part will be used.
+    3. Multi-head attention is the vital technical part.
+- XGBoost: 
+- ResMLP: 
+    1. Very similar to ResMLP. 
+    2. Use 2d-convolution to patchify the input image; ResMLP use reshape method (similar to ViT)
+- RepMLP
+
 
 
