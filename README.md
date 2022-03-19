@@ -34,3 +34,7 @@ Quant Learning Repository
     6. The little book of Common Sense Investing (basic investment)
     7. 
 
+# Quick Start
+```
+pip install -r requirements.txt
+```
