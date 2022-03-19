@@ -35,6 +35,11 @@ Quant Learning Repository
     7. 
 
 # Quick Start
+To install the related python packages:
 ```
 pip install -r requirements.txt
+```
+If you encounter with warning message while installing ta-lib:
+```
+conda install -c conda-forge ta-lib
 ```
