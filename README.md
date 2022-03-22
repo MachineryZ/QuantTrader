@@ -16,7 +16,6 @@ Quant Learning Repository
     1. HuaTai Security Report of Artificial Intelligence
 
 
-
 # Paper List and Learning Resources:
 
 ## Deep learning Models for Quant
