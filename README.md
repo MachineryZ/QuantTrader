@@ -22,7 +22,8 @@ Quant Learning Repository
 1. Neural Network-based Automatic Factor Construction (NNAFC) https://arxiv.org/pdf/2008.06225.pdf
 2. 
 ## Alpha Discovering and Mining Paper
-1. Huatai Securities in HuaTai folder
+1. Huatai Securities in HuaTai_AIReport
+2. GuoTaiJunAn Security in GTJA_QuantReport
 ## Finance Learning resources
 1. Readings
     1. International Trade 4th (international trade)
