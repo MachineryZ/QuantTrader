@@ -3,7 +3,7 @@ from ctpbee import CtpBee
 from ctpbee import CtpbeeApi
 from ctpbee.constant import *
 
-app = CtpBee("somehow", __name__)
+app = CtpBee("somewheve", __name__)
 
 # Need parameter to get want you need
 info = {
@@ -22,21 +22,31 @@ info = {
     "MD_FUNC": True
 }
 
-class macdStrategy(CtpbeeApi):
-    def on_realtime(self):
-        # run on_realtime each 1 second
-        return super().on_realtime()
+# class MacdStrategy(CtpbeeApi):
+#     def __init__(self, name):
+#         super().__init__(name)
+
+
+#     def on_realtime(self):
+#         # run on_realtime each 1 second
+#         return super().on_realtime()
     
-    def on_tick(self, tick: TickData) -> None:
-        # tick data trigger
-        pass
+#     def on_tick(self, tick: TickData) -> None:
+#         # tick data trigger
+#         print(f"on_tick: {tick}")
+#         pass
 
-    def on_3_min_bar(self, bar: BarData) -> None:
-        print(bar)
+#     def on_3_min_bar(self, bar: BarData) -> None:
+#         print(f"on_3_min_bar: {bar}")
 
-    def on_bar(self, bar: BarData) -> None:
-        pass
+#     def on_bar(self, bar: BarData) -> None:
+#         print(f"on_bar: {bar}")
 
+#     def on_contract(self, contract: ContractData) -> None:
+#         print(f"on_contract: {contract}")
+#         return super().on_contract(contract)
 
 app.config.from_mapping(info)
+# macd = MacdStrategy()
+# app.add_extension(macd)
 app.start()
