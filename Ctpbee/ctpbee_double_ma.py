@@ -47,6 +47,26 @@ class DoubleMaStrategy(CtpbeeApi):
     def on_init(self, init: bool):
         print("init success")
 
+app = CtpBee("doublema", __name__, refresh=True)
+app.config.from_mapping({
+    "CONNECT_INFO": {
+        "userid": "089131",
+        "password": "350888",
+        "brokerid": "9999",
+        "md_address": "tcp://218.202.237.33:10112",
+        "td_address": "tcp://218.202.237.33:10102",
+        "product_info": "",
+        "appid": "simnow_client_test",
+        "auth_code": "0000000000000000"
+    },
+    "INTERFACE": "ctp",  # 
+    "TD_FUNC": True,  # 
+    "MD_FUNC": True,
+    "XMIN": [1]
+})
+strategy = DoubleMaStrategy("doublema")
+app.add_extension(strategy)
+app.start()
 
 if __name__ == '__main__':
     app = CtpBee("doublema", __name__, refresh=True)
