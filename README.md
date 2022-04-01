@@ -32,7 +32,9 @@ Quant Learning Repository
     4. Investment Science (derivatives)
     5. The Essays of Warren Buffett (enterprise management and investment)
     6. The little book of Common Sense Investing (basic investment)
-    7. 
+## Financial Economics 25
+https://www.bilibili.com/video/BV1Bx411d714?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click
+Professor Gao Xu's Financial Economics 25. The folder contains my notes for each chapter and self-written homework answer. 
 
 # Quick Start
 To install the related python packages:
