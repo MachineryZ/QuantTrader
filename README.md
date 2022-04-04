@@ -35,6 +35,29 @@ Quant Learning Repository
 ## Financial Economics 25
 https://www.bilibili.com/video/BV1Bx411d714?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click
 Professor Gao Xu's Financial Economics 25. The folder contains my notes for each chapter and self-written homework answer. 
+1. chapter3: Interest rate and bond analysis
+2. chapter4: Stock Model
+3. chapter5: Mean-Variance Analysis
+4. chapter6: CAPM
+5. chapter7:
+6. chapter8:
+7. chapter9:
+8. chapter10:
+9. chapter11:
+10. chapter12:
+11. chapter13:
+12. chapter14:
+13. chapter15:
+14. chapter16:
+15. chapter17:
+16. chapter18:
+17. chapter19:
+18. chapter20:
+19. chapter21:
+20. chapter22:
+21. chapter23:
+22. chapter24:
+23. chapter25:
 
 # Quick Start
 To install the related python packages:
