@@ -40,7 +40,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 3. chapter5: Mean-Variance Analysis
 4. chapter6: CAPM
 5. chapter7: CAPM
-6. chapter8: 
+6. chapter8: CAPM
 7. chapter9:
 8. chapter10:
 9. chapter11:
