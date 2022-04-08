@@ -41,8 +41,8 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 4. chapter6: CAPM
 5. chapter7: CAPM
 6. chapter8: Expected Utility Theory
-7. chapter9:
-8. chapter10:
+7. chapter9: Savings
+8. chapter10: Equilibrium
 9. chapter11:
 10. chapter12:
 11. chapter13:
