@@ -44,7 +44,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 7. chapter9: Savings
 8. chapter10: Equilibrium
 9. chapter11: C-CAPM
-10. chapter12: 
+10. chapter12: C-CAPM(2)
 11. chapter13:
 12. chapter14:
 13. chapter15:
