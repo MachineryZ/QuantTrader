@@ -95,15 +95,12 @@ class ResMLP(nn.Module):
 
     def forward(self, x):
         patches = self.patcher(x)
-        print(patches.shape)
         batch_size, num_features, _, _ = patches.shape
         patches = patches.permute(0, 2, 3, 1)
         patches = patches.view(batch_size, -1, num_features)
         # patches.shape == (batch_size, num_patches, num_features)
         embedding = self.mlps(patches)
-        print(embedding.shape)
         embedding = torch.mean(embedding, dim=1)
-        print(embedding.shape)
         logits = self.classifier(embedding)
         return logits
 
