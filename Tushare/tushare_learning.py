@@ -24,3 +24,8 @@ df = pro.trade_cal(exchange='', start_date='20100101', end_date='20220401')
 #取000001的前复权行情
 df = tushare.pro_bar(ts_code='000001.SZ', adj='qfq', start_date='20180101', end_date='20181011')
 print(df)
+
+# 日行情
+df = pro.daily(trade_date="20180810")
+# df.to_feather('/home/zzz/try.feather')
+# print(df)
