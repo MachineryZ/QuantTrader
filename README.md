@@ -48,7 +48,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 11. chapter13: Multi-Factor Model
 12. chapter14: APT
 13. chapter15: APT Fundamental Theory
-14. chapter16:
+14. chapter16: 
 15. chapter17:
 16. chapter18:
 17. chapter19:
