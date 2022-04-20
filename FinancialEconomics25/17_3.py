@@ -31,13 +31,10 @@ def Normal():
     for i in range(len(r[-1])):
         v.append(0.0)
     value.append(v)
-    # print(r[-1])
-    # print(value[-1])
+
     for t in reversed(range(0, T)):
         v = []
         for i in range(len(r[t+1]) - 1):
-            # print(f"t = {t}")
-            # print(f"i = {i}")
             v.append(1/(1 + r0 * math.pow(u, r[t][i])) * 
              (q * (r_bar * B[t] + B[t] - B[t+1] + value[T-t-1][i]) + 
             (1-q) * (r_bar * B[t] + B[t] - B[t+1] + value[T-t-1][i+1])))
@@ -75,13 +72,9 @@ def Immediate():
     for i in range(len(r[-1])):
         v.append(0.0)
     value.append(v)
-    # print(r[-1])
-    # print(value[-1])
     for t in reversed(range(0, T)):
         v = []
         for i in range(len(r[t+1]) - 1):
-            # print(f"t = {t}")
-            # print(f"i = {i}")
             v.append(min(1/(1 + r0 * math.pow(u, r[t][i])) * 
              (q * (r_bar * B[t] + B[t] - B[t+1] + value[T-t-1][i]) + 
             (1-q) * (r_bar * B[t] + B[t] - B[t+1] + value[T-t-1][i+1])), B[t]))

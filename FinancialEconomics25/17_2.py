@@ -40,7 +40,6 @@ def main():
         option_T.append(
             max(0, max( K - pow(u, stock_price[-1][i]) * s0 ,0))
         )
-    # print(option_T)
     option_price.append(option_T)
     # Calculate the option price in each period (0-T-1):
     for t in reversed(range(0, T)):
