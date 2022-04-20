@@ -49,7 +49,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 12. chapter14: APT
 13. chapter15: APT Fundamental Theory
 14. chapter16: Multi-Period Binary Tree Option Pricing Model
-15. chapter17:
+15. chapter17: Optimal Stopping
 16. chapter18:
 17. chapter19:
 18. chapter20:
@@ -59,7 +59,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 22. chapter24:
 23. chapter25:
 
-# Quick Start
+## Quick Start
 To install the related python packages:
 ```
 pip install -r requirements.txt
