@@ -52,7 +52,7 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 15. chapter17: Optimal Stopping
 16. chapter18: Black-Scholes-Merton Formula
 17. chapter19: Delta-Hedge
-18. chapter20:
+18. chapter20: Frictions
 19. chapter21:
 20. chapter22:
 21. chapter23:
