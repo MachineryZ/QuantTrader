@@ -3,6 +3,7 @@ In this folder, I mainly write deep learning models (mostly in NLP) for quant
 - PoNet: https://arxiv.org/abs/2110.02442v1.pdf
 - BigBird: https://arxiv.org/pdf/2007.14062v2.pdf
 - CosFormer: https://arxiv.org/abs/2202.08791.pdf
+- GAU: 
 - Informer: https://arxiv.org/abs/2012.07436v2.pdf
 - Linformer: https://arxiv.org/abs/2006.04768v3.pdf
 - LinearTransformer: https://arxiv.org/abs/2006.16236.pdf
@@ -40,8 +41,17 @@ For testing, or for debugging, we will generate some pseudo data for our NN.
 - PoNet: 
 - BigBird: 
 - CosFormer: 
+- GAU:
+    1. Gated Attention Unit
+- GLU Transformer:
+    1. Gated Linear Unit
+    2. self-attention - layernorm - glu - layernorm
+    3. use fully-connected layer to get mask and value
 - Informer: 
 - Linformer: 
+    1. Change the sequence length, reduce the computational complexity
+    2. short sequence length has lower bound, proved by Johnson–Lindenstrauss Lemma
+    3. Normal transformer-liked architecture
 - LinearTransformer: 
 - LocalAttention: 
 - LongFormer: 
@@ -49,7 +59,6 @@ For testing, or for debugging, we will generate some pseudo data for our NN.
     1. Do fully connected in two dimensions: first one is in features dimension, second one is in num_patches dimension
     2. For num_patches dimension, use pseudo fc (conv1d) instead
     3. Notice that, classic mlp we usually use decreasing hidden\_size during fc layers; However, in such MLP variants, we use expansion trick. For example: hs -> expansion\_ratio * hs -> hs
-- PerFormer: 
 - ReFormer: 
 - SinkhornTransformer: 
 - SparseFormer: 
@@ -58,6 +67,12 @@ For testing, or for debugging, we will generate some pseudo data for our NN.
     1. Tradition, classical and fundamental Transformer model
     2. Encoder + Decoder architecture, only encoder part will be used.
     3. Multi-head attention is the vital technical part.
+- PoNet:
+    1. Differnet Pooling Layer
+    2. Local Pooling; Global Pooling; Segment Pooling
+- PoolFormer:
+    1. Pooling Feature Extractor
+    2. Normal transformer-liked architecture
 - XGBoost: 
 - ResMLP: 
     1. Very similar to ResMLP. 

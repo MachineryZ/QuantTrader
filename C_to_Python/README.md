@@ -7,3 +7,10 @@
    2. 生成命令为：g++ xxx.cpp -fpic -shared -o libxxx.so
 3. 编写python程序
 4. 注意调用的ctypes的库
+我的这个例子就是
+~~~bash
+g++ cpp_code.cpp -fpic -shared -o libtest.so
+python python_code.py
+~~~
+这样生成so和运行python文件即可
+
