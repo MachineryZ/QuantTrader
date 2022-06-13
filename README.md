@@ -54,10 +54,10 @@ Professor Gao Xu's Financial Economics 25. The folder contains my notes for each
 17. chapter19: Delta-Hedge
 18. chapter20: Frictions
 19. chapter21: Adverse Selection
-20. chapter22:
-21. chapter23:
-22. chapter24:
-23. chapter25:
+20. chapter22: Finish
+21. chapter23: Finish
+22. chapter24: Finish
+23. chapter25: Finish
 
 ## Quick Start
 To install the related python packages:
